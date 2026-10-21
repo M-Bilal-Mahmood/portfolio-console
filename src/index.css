@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #111113;
+  }
+  body {
+    background-color: #111113;
+    color: #EDEDED;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+
+/* Container query context established in CSS immediately */
+.console-device-wrapper {
+  container-type: inline-size;
+}
+
+/* Keycap typography */
+.keycap-caption {
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Default keycap typography (560px and wider): scale with cqw with no pixel minimum */
+.key-top-row .keycap-letter {
+  font-size: 2.3cqw;
+  font-weight: 700;
+}
+.key-top-row .keycap-caption {
+  font-size: 0.85cqw;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.key-lower-row .keycap-letter {
+  font-size: 1.9cqw;
+  font-weight: 700;
+}
+.key-lower-row .keycap-caption {
+  font-size: 0.7cqw;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.key-contact .keycap-letter {
+  font-size: 2.2cqw;
+  font-weight: 700;
+}
+.key-contact .keycap-caption {
+  font-size: 1.5cqw;
+  font-weight: 700;
+}
+
+/* Narrow console wrapper (< 560px container query): hide captions, centre and enlarge letters */
+@container (max-width: 559px) {
+  .keycap-caption {
+    display: none !important;
+  }
+  .key-top-row .keycap-letter {
+    font-size: 3cqw;
+  }
+  .key-lower-row .keycap-letter {
+    font-size: 2.4cqw;
+  }
+  .key-contact .keycap-contact-content {
+    gap: 0;
+    padding: 0;
+    justify-content: center;
+  }
+  .key-contact .keycap-letter {
+    font-size: 2.4cqw;
+  }
+}
+
+/* Prevent container-query units flash on load: keys start at opacity 0 */
+.keys-overlay {
+  opacity: 0;
+}
+
+/* Show keys immediately with no fade once container units and DOM are ready */
+.is-ready .keys-overlay {
+  opacity: 1;
+}
+
+/* CSS variables for key lift heights */
+:root {
+  --key-rest-lift-y: -0.8cqw;
+  --key-rest-lift-x: 0.45cqw;
+  --key-hover-lift-y: -0.76cqw;
+  --key-hover-lift-x: 0.4275cqw;
+  --key-press-lift-y: 0cqw;
+  --key-press-lift-x: 0cqw;
+}
+
+/* Initial key face styling: starts directly at rest lift with transition disabled to eliminate initial jump */
+.keycap-face {
+  --face-lift-y: var(--key-rest-lift-y);
+  --face-lift-x: var(--key-rest-lift-x);
+  --face-shadow-y: 0.8cqw;
+  --face-shadow-x: -0.45cqw;
+  transform: translate(var(--face-lift-x), var(--face-lift-y));
+  box-shadow: var(--face-shadow-x) var(--face-shadow-y) 0px 0px var(--base-color);
+  transition: none;
+}
+
+/* Enable transitions only after the first paint / is-ready: smooth mechanical spring-back on release */
+.is-ready .keycap-face {
+  transition: transform 150ms cubic-bezier(0.34, 1.25, 0.64, 1), box-shadow 150ms cubic-bezier(0.34, 1.25, 0.64, 1), background-color 120ms ease;
+}
+
+/* Hover and keyboard focus: slight 5% press down to 0.76cqw with smooth tactile response */
+.keycap-button:hover .keycap-face,
+.keycap-button:focus .keycap-face,
+.keycap-button:focus-visible .keycap-face {
+  --face-lift-y: var(--key-hover-lift-y);
+  --face-lift-x: var(--key-hover-lift-x);
+  --face-shadow-y: 0.76cqw;
+  --face-shadow-x: -0.4275cqw;
+  transition: transform 120ms ease-out, box-shadow 120ms ease-out, background-color 80ms ease;
+}
+
+/* Pressed state: smooth quick inward travel */
+.keycap-button.is-pressed .keycap-face,
+.keycap-button:active .keycap-face {
+  --face-lift-y: var(--key-press-lift-y);
+  --face-lift-x: var(--key-press-lift-x);
+  box-shadow: 0 0.1cqw 0.2cqw rgba(0, 0, 0, 0.4);
+  transition: transform 90ms cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 90ms cubic-bezier(0.2, 0.9, 0.3, 1), background-color 90ms ease;
+}
+
+/* Transient no-transition reset when tab is blurred/hidden or wave cancelled */
+.no-transition .keycap-face,
+.is-ready.no-transition .keycap-face,
+.keycap-face.no-transition {
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .keycap-face {
+    --face-lift-y: var(--key-rest-lift-y) !important;
+    --face-lift-x: var(--key-rest-lift-x) !important;
+    --face-shadow-y: 0.8cqw !important;
+    --face-shadow-x: -0.45cqw !important;
+    transform: translate(var(--face-lift-x), var(--face-lift-y)) !important;
+    box-shadow: var(--face-shadow-x) var(--face-shadow-y) 0px 0px var(--base-color) !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  .keycap-button:hover .keycap-face,
+  .keycap-button:focus .keycap-face,
+  .keycap-button:focus-visible .keycap-face,
+  .keycap-button.is-pressed .keycap-face,
+  .keycap-button:active .keycap-face {
+    --face-lift-y: var(--key-rest-lift-y) !important;
+    --face-lift-x: var(--key-rest-lift-x) !important;
+    --face-shadow-y: 0.8cqw !important;
+    --face-shadow-x: -0.45cqw !important;
+    transform: translate(var(--face-lift-x), var(--face-lift-y)) !important;
+    box-shadow: var(--face-shadow-x) var(--face-shadow-y) 0px 0px var(--base-color) !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@keyframes keyPop {
+  0% { transform: translate(0.45cqw, -0.8cqw); box-shadow: -0.45cqw 0.8cqw 0px var(--base-color); }
+  25% { transform: translate(0.45cqw, -3.8cqw); box-shadow: -0.45cqw 3.8cqw 0px var(--base-color); }
+  50% { transform: translate(0.45cqw, -0.2cqw); box-shadow: -0.45cqw 0.2cqw 0px var(--base-color); }
+  75% { transform: translate(0.45cqw, -1.3cqw); box-shadow: -0.45cqw 1.3cqw 0px var(--base-color); }
+  100% { transform: translate(0.45cqw, -0.8cqw); box-shadow: -0.45cqw 0.8cqw 0px var(--base-color); }
+}

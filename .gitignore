@@ -1,0 +1,13 @@
+node_modules
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env
+.env.local
+.env*
+!.env.example
+.aistudio/
+public/assets/device-reference.png

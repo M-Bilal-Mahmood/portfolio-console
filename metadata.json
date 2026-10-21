@@ -1,0 +1,8 @@
+{
+  "name": "The Portfolio Console",
+  "description": "Interactive mechanical keyboard portfolio component built with React.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
