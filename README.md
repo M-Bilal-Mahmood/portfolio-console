@@ -2,7 +2,7 @@
 
 An interactive mechanical keyboard portfolio component built with React and TypeScript. Real HTML keycaps sit over a case image. Hover, focus, click or press the matching key on your keyboard, and the terminal screen types out that key's title.
 
-Live demo: coming soon
+Live demo: https://portfolio-console-six.vercel.app
 
 ## Features
 
