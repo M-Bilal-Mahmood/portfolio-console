@@ -10,4 +10,3 @@ coverage/
 .env*
 !.env.example
 .aistudio/
-public/assets/device-reference.png
