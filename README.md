@@ -38,7 +38,7 @@ Edit keys, colours, positions and text in `src/consoleConfig.ts`. Pass `imageSrc
 
 ## Device artwork
 
-The component needs the case image at `public/assets/device-reference.png`, or any image you pass through `imageSrc`. The key coordinates in `consoleConfig.ts` are measured for the original artwork, so another image needs new coordinates.
+The case image at `public/assets/device-reference.png` is by Debbie (@ui.debbie on Instagram), shared publicly with her design brief. It is not covered by the MIT licence. If you are the artist and want it removed, please open an issue, and I will take it down. The key coordinates in `consoleConfig.ts` are measured for this image.
 
 ## Keyboard shortcuts
 
